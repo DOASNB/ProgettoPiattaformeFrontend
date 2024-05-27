@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 List<dynamic> listToJson(List<dynamic> list) {
   return list.map((item) => item.toJson()).toList();

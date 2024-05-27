@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:progetto_piattaforme_frontend/components/favorite_button.dart';
 import 'package:progetto_piattaforme_frontend/entities/product.dart';
 import 'package:provider/provider.dart';
 
-import '../entities/Shop.dart';
+import '../managers/ShopManager.dart';
 
 class ProductTile extends StatelessWidget{
 
@@ -35,14 +34,14 @@ class ProductTile extends StatelessWidget{
             decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(12)),
             width: double.infinity,
-            padding: EdgeInsets.all(5),
-            child: Icon(Icons.face))),
+            padding: const EdgeInsets.all(5),
+            child: const Icon(Icons.face))),
 
 
 
 
           Text(product.name!,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 27
           ),),
@@ -52,7 +51,7 @@ class ProductTile extends StatelessWidget{
           ),),
 
           const Spacer(),
-          Text("£"+product.price!.toStringAsFixed(2),
+          Text("£${product.price!.toStringAsFixed(2)}",
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 18
@@ -62,14 +61,14 @@ class ProductTile extends StatelessWidget{
             children: [
               IconButton(onPressed: () => addToCart(context), icon: SvgPicture.asset("assets/icons/add_to_cart.svg") ),
               
-              Spacer(),
+              const Spacer(),
 
-              Container(
-                constraints: BoxConstraints(maxHeight: 60,maxWidth: 50),
-
+              SizedBox(
 
 
-                height: 30,
+
+                width: 40,
+                height: 40,
                 child: FavoriteButton(favorite: false),
               )
             ],
@@ -87,16 +86,16 @@ class ProductTile extends StatelessWidget{
   void addToCart(BuildContext context){
     showDialog(context: context, builder: (context)=>
         AlertDialog(
-        content: Text("Aggiungere al carrello?"),
+        content: const Text("Aggiungere al carrello?"),
         actions: [
           MaterialButton(onPressed: ()=> Navigator.pop(context),
-          child: Text("canccella")),
+          child: const Text("canccella")),
 
           MaterialButton(onPressed: () {
             Navigator.pop(context);
-              context.read<Shop>().addToCart(product);
+              context.read<ShopManager>().addToCart(product);
           },
-          child: Text("Si")),
+          child: const Text("Si")),
 
         ],));
   }

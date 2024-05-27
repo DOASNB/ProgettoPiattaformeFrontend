@@ -32,12 +32,7 @@ class ProductInPurchase{
 
   @override
   String toString() {
-    return 'ProductInPurchase{' +
-        ' id: $id,' +
-        ' quantity: $quantity,' +
-        ' product: $product,' +
-        ' order: $order,' +
-        '}';
+    return 'ProductInPurchase{ id: $id, quantity: $quantity, product: $product, order: $order,}';
   }
 
   ProductInPurchase copyWith({
@@ -56,10 +51,10 @@ class ProductInPurchase{
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'quantity': this.quantity,
-      'product': this.product,
-      'order': this.order,
+      'id': id,
+      'quantity': quantity,
+      'product': product,
+      'order': order,
     };
   }
 

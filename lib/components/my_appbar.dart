@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
+import 'package:provider/provider.dart';
 
 import '../pages/cartPage.dart';
 
@@ -21,8 +23,10 @@ class _MyAppbarState extends State<MyAppbar>{
 
   bool loggedIn = false;
 
+
   @override
   Widget build(BuildContext context) {
+    ShopManager shopManager = context.watch<ShopManager>();
 
     return Scaffold(
         appBar: AppBar(
@@ -42,7 +46,7 @@ class _MyAppbarState extends State<MyAppbar>{
 
           }),
           actions: <Widget>[
-            IconButton(onPressed: () {},
+            IconButton(onPressed: () {shopManager.addProductToShop();},
                 icon: SvgPicture.asset("assets/icons/login.svg"),
                 constraints: const BoxConstraints(maxWidth: 60)),
 

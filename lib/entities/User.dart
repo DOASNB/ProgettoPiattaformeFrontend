@@ -21,12 +21,12 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'firstname': this.firstname,
-      'lastname': this.lastname,
-      'teleponeNumber': this.teleponeNumber,
-      'email': this.email,
-      'address': this.address,
+      'id': id,
+      'firstname': firstname,
+      'lastname': lastname,
+      'teleponeNumber': teleponeNumber,
+      'email': email,
+      'address': address,
     };
   }
 

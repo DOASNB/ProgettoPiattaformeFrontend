@@ -1,15 +1,14 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:progetto_piattaforme_frontend/entities/Shop.dart';
-import 'package:progetto_piattaforme_frontend/pages/home.dart';
+import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
 import 'package:progetto_piattaforme_frontend/pages/shop_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
       ChangeNotifierProvider(
-          create: (context) => Shop(),
+          create: (context) => ShopManager(),
           child: const MyApp()
   ));
 }
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
+        fontFamily: "RedditMono",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         useMaterial3: true,
       ),

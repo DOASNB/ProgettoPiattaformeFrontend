@@ -32,14 +32,14 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'code': this.code,
-      'name': this.name,
-      'description': this.description,
-      'image': this.image,
-      'price': this.price,
-      'quantity': this.quantity,
-      'category': this.category,
+      'id': id,
+      'code': code,
+      'name': name,
+      'description': description,
+      'image': image,
+      'price': price,
+      'quantity': quantity,
+      'category': category,
     };
   }
 

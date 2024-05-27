@@ -33,7 +33,7 @@ class RestManager {
     bool errorOccurred = false;
     while ( true ) {
       try {
-        var response;
+        Response response;
         // setting content type
         String contentType="";
         dynamic formattedBody;
@@ -54,15 +54,13 @@ class RestManager {
 
         //si impostano gli headers della richiesta
         // setting headers
-        Map<String, String> headers = Map();
+        Map<String, String> headers = {};
         headers[HttpHeaders.contentTypeHeader] = contentType;
 
         String token = (await AccessTokenRequest.getAccessToken())!;
-        if ( token != null ) {
-          //se disponibile, si imposta il token di autenticazione
-          headers[HttpHeaders.authorizationHeader] = 'bearer $token';//se abbiamo il token, lo inseriamo all'interno dell'header
-        }
-
+        //se disponibile, si imposta il token di autenticazione
+        headers[HttpHeaders.authorizationHeader] = 'bearer $token';//se abbiamo il token, lo inseriamo all'interno dell'header
+      
         //in base al metodo fornito, si effettua una richiesta http
         // making request
         switch ( method ) {//facciamo la richiesta http
@@ -107,7 +105,7 @@ class RestManager {
 
 
       } catch(err) {//se c'è un errore si arresta per 5 secondi e dopo riprova a fare la richiesta
-        if ( delegate != null && !errorOccurred ) {
+        if ( !errorOccurred ) {
           delegate.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);//il RestManager non conosce la classe della grafica (siamo in un layer sottostante)
           //però possiamo tramite delegazione chiamare un metodo che è nell'interfaccia grafica, passando un messaggio
           errorOccurred = true;

@@ -43,14 +43,7 @@ class Order{
 
   @override
   String toString() {
-    return 'Order{' +
-        ' id: $id,' +
-        ' purchaseTime: $purchaseTime,' +
-        ' buyer: $buyer,' +
-        ' productInPurchase: $productInPurchase,' +
-        ' expectedDelivery: $expectedDelivery,' +
-        ' deliveryAddress: $deliveryAddress,' +
-        '}';
+    return 'Order{ id: $id, purchaseTime: $purchaseTime, buyer: $buyer, productInPurchase: $productInPurchase, expectedDelivery: $expectedDelivery, deliveryAddress: $deliveryAddress,}';
   }
 
   Order copyWith({
@@ -73,12 +66,12 @@ class Order{
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'purchaseTime': this.purchaseTime,
-      'buyer': this.buyer,
-      'productInPurchase': this.productInPurchase,
-      'expectedDelivery': this.expectedDelivery,
-      'deliveryAddress': this.deliveryAddress,
+      'id': id,
+      'purchaseTime': purchaseTime,
+      'buyer': buyer,
+      'productInPurchase': productInPurchase,
+      'expectedDelivery': expectedDelivery,
+      'deliveryAddress': deliveryAddress,
     };
   }
 

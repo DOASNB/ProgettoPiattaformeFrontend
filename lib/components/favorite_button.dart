@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -35,6 +34,7 @@ class _FavoriteButtonState extends State<FavoriteButton>{
       SvgPicture.asset("assets/icons/favoriteFull.svg")
       :SvgPicture.asset("assets/icons/favoriteEmpty.svg"),
       onPressed: toggleFavorite,
+      iconSize: 40,
     ));
 
 

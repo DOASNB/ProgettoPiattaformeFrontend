@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_piattaforme_frontend/components/my_appbar.dart';
 import 'package:progetto_piattaforme_frontend/components/product_tile.dart';
-import 'package:progetto_piattaforme_frontend/entities/product.dart';
 import 'package:provider/provider.dart';
-import 'package:progetto_piattaforme_frontend/entities/Shop.dart';
+import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
 
 
 class ShopPage extends StatelessWidget{
@@ -13,7 +11,7 @@ class ShopPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
-    final products = context.watch<Shop>().shop;
+    final products = context.watch<ShopManager>().shop;
     return Scaffold(
       appBar: MyAppbar(),
       body:
