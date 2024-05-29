@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:progetto_piattaforme_frontend/components/favorite_button.dart';
-import 'package:progetto_piattaforme_frontend/entities/product.dart';
+import 'package:progetto_piattaforme_frontend/entities/Product.dart';
 import 'package:provider/provider.dart';
 
 import '../managers/ShopManager.dart';

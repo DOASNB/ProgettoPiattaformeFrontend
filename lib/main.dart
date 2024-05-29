@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
 import 'package:progetto_piattaforme_frontend/pages/shop_page.dart';
 import 'package:provider/provider.dart';
-
+import 'support/Globals.dart' as globals;
+import 'support/constants.dart' as constants;
 void main() {
   runApp(
       ChangeNotifierProvider(

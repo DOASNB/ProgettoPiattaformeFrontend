@@ -4,6 +4,8 @@ import 'package:progetto_piattaforme_frontend/components/product_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
 
+import '../entities/Product.dart';
+
 
 class ShopPage extends StatelessWidget{
   const ShopPage({super.key});
@@ -11,7 +13,9 @@ class ShopPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
-    final products = context.watch<ShopManager>().shop;
+    context.watch<ShopManager>().updateShop();
+    List<Product> products = context.watch<ShopManager>().products;
+
     return Scaffold(
       appBar: MyAppbar(),
       body:

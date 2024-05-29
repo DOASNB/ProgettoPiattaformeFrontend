@@ -1,7 +1,6 @@
 class AuthenticationData {
 
-  static AuthenticationData? instance; // Variabile statica per l'istanza globale
-  //utilizzo del pattern singleton
+  static AuthenticationData? instance;
 
   String accessToken;
   String refreshToken;

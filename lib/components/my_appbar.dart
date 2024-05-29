@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
+import 'package:progetto_piattaforme_frontend/pages/orderPage.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/cartPage.dart';
@@ -26,10 +27,10 @@ class _MyAppbarState extends State<MyAppbar>{
 
   @override
   Widget build(BuildContext context) {
-    ShopManager shopManager = context.watch<ShopManager>();
 
-    return Scaffold(
-        appBar: AppBar(
+
+  
+        return AppBar(
           title: const Text('Progetto piattaforme',
               style: TextStyle(color: Colors.black,
                   fontSize: 18,
@@ -46,13 +47,13 @@ class _MyAppbarState extends State<MyAppbar>{
 
           }),
           actions: <Widget>[
-            IconButton(onPressed: () {shopManager.addProductToShop();},
+            IconButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage()));},
                 icon: SvgPicture.asset("assets/icons/login.svg"),
                 constraints: const BoxConstraints(maxWidth: 60)),
 
           ],
-        )
-    );
+        );
+
   }
 
 

@@ -1,35 +1,33 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:progetto_piattaforme_frontend/entities/ProductInPurchase.dart';
-import 'package:progetto_piattaforme_frontend/entities/product.dart';
+import 'package:progetto_piattaforme_frontend/entities/Product.dart';
+
 
 import '../entities/Order.dart';
+import '../support/constants.dart' as constants;
+import '../support/Globals.dart';
 
 class ShopManager extends ChangeNotifier {
+  
+  bool loggedIn = false;
 
-  final List<Order> _orders=[
-    Order(id: 10,productInPurchase: [
-      ProductInPurchase(quantity: 3
-        ,product: Product(name:"Product1",price: 10,description: "desc",favorite: false)),
-      ProductInPurchase(quantity: 1
-          ,product: Product(name:"Product3",price: 10,description: "desc",favorite: false)),
-    ])
+  List<Order> _orders=[
+
   ];
 
 
-  final List<Product> _shop =[
-
-    Product(name:"Product1",price: 10,description: "desc",favorite: false),
-    Product(name:"Product2",price: 10,description: "desc",favorite: false),
-    Product(name:"Product3",price: 10,description: "desc",favorite: false),
-    Product(name:"Product3",price: 10,description: "desc",favorite: false)
+  List<Product> _products =[
 
   ];
 
   final List<Product> _cart = [];
 
-  List<Product> get shop => _shop;
+  List<Product> get products {
+    return _products;
+  }
   List<Order> get orders => _orders;
   List<Product> get cart => _cart;
 
@@ -51,11 +49,41 @@ class ShopManager extends ChangeNotifier {
     return sum;
   }
 
-  void addProductToShop(){
-    Product prod = Product(name:"Product1",price: Random().nextDouble(),description: "desc",favorite: true);
-    _shop.add(prod);
+  
+  void setLogin(bool loggedIn){
+    this.loggedIn = loggedIn;
     notifyListeners();
   }
+  
+  
+  void updateShop() async{
+
+
+    dynamic productsjson = jsonDecode(await restManager.makeGetRequest(constants.ADDRESS_STORE_SERVER, constants.REQUEST_PRODUCTS, {}));
+
+
+    List<Product> products = productsjson.map((jsonItem) {
+      return Product.fromMap(jsonItem as Map<String, dynamic>);
+    }).toList();
+
+
+    _products = products;
+
+
+    
+
+
+
+  
+
+
+
+
+
+    
+  }
+
+
 
 
 }

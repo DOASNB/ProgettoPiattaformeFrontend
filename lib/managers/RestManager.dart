@@ -1,11 +1,15 @@
 import 'dart:io';//consente di interagire con il sistema operativo
 import 'dart:convert';//consente di codificare e decodificare i json
+import 'dart:js_interop';
 
 import 'package:http/http.dart';
+import 'package:progetto_piattaforme_frontend/managers/UserManager.dart';
 
-import '../support/Constants.dart';
+import '../support/constants.dart';
 import '../support/ErrorListener.dart';
-import '../support/keycloack/accessTokenRequest.dart';
+import '../support/keycloak/accessTokenRequest.dart';
+import '../support/Globals.dart';
+
 
 enum TypeHeader {//definisce due tipi di intestazione per specificare il tipo di contenuto dei dati inviati nella richiesta HTTP
   json,
@@ -19,21 +23,14 @@ class RestManager {
 
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String>? value, dynamic body}) async {
-    //esegue la richiesta HTTP
 
-    //prende in input l'indirizzo del server, il percorso del servizio, il metodo http da utilizzare, il tipo di intestazione,
-    // eventuali parametri di valore ed un payload
-
-
-    print(value);
-    //creiamo un uri usando l'indirizzo del server, il percorso del servizio ed i parametri di valore
     Uri uri = Uri.http(serverAddress, servicePath, value);
+    Response response= Response("", 400);
 
-    print(uri.toString());
     bool errorOccurred = false;
     while ( true ) {
       try {
-        Response response;
+
         // setting content type
         String contentType="";
         dynamic formattedBody;
@@ -57,7 +54,11 @@ class RestManager {
         Map<String, String> headers = {};
         headers[HttpHeaders.contentTypeHeader] = contentType;
 
-        String token = (await AccessTokenRequest.getAccessToken())!;
+        if(UserManager().loggedIn){
+          token = UserManager().token;
+        }else{
+        token = (await AccessTokenRequest.getAccessToken())!;
+        }
         //se disponibile, si imposta il token di autenticazione
         headers[HttpHeaders.authorizationHeader] = 'bearer $token';//se abbiamo il token, lo inseriamo all'interno dell'header
       
@@ -76,6 +77,7 @@ class RestManager {
               uri,
               headers: headers,
             );
+
 
             break;
           case "put":
@@ -106,7 +108,7 @@ class RestManager {
 
       } catch(err) {//se c'è un errore si arresta per 5 secondi e dopo riprova a fare la richiesta
         if ( !errorOccurred ) {
-          delegate.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);//il RestManager non conosce la classe della grafica (siamo in un layer sottostante)
+          delegate.errorNetworkOccurred("Constants.MESSAGE_CONNECTION_ERROR");//il RestManager non conosce la classe della grafica (siamo in un layer sottostante)
           //però possiamo tramite delegazione chiamare un metodo che è nell'interfaccia grafica, passando un messaggio
           errorOccurred = true;
         }
@@ -136,3 +138,5 @@ class RestManager {
     return _makeRequest(serverAddress, servicePath, "delete", type, value: value);
   }
 }
+
+

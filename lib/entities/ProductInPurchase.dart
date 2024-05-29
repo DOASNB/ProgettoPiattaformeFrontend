@@ -1,5 +1,5 @@
 import 'package:progetto_piattaforme_frontend/entities/Order.dart';
-import 'package:progetto_piattaforme_frontend/entities/product.dart';
+import 'package:progetto_piattaforme_frontend/entities/Product.dart';
 
 class ProductInPurchase{
 

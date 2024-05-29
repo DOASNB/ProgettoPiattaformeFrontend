@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../managers/ShopManager.dart';
-import '../entities/product.dart';
+import '../entities/Product.dart';
 
 class CartPage extends StatelessWidget {
 

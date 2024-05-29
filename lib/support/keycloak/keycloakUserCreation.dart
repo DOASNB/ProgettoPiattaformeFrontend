@@ -7,7 +7,7 @@ class KeycloakUserCreation {
   final String password;
   final String username;
 
-  String userCreationUrl = "http://localhost:8080/admin/realms/SIMONE/users";
+  String userCreationUrl = "http://localhost:8080/admin/realms/SpringBootKeycloak/users";
 
 
   KeycloakUserCreation({
