@@ -22,9 +22,7 @@ const String REQUEST_DELETE_FAVORITE="/favorites/favorite";
 const String REQUEST_UPDATE_PRODUCT="/products/edit";
 const String KEYCLOAK_TOKEN_URL = "localhost:8080/realms/SpringBootKeycloak/protocol/openid-connect/token";
 const String CLIENT_ID = 'progetto1';
-
-
-enum Category {DECORAZIONE,GIOCATTOLO,STRUMENTO}
+const String USER_CREATION_KEYCLOAK="http://localhost:8080/admin/realms/SpringBootKeycloak/users";
 
 
 

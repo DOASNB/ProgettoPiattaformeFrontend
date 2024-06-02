@@ -4,16 +4,14 @@ import 'package:progetto_piattaforme_frontend/entities/Product.dart';
 class ProductInPurchase{
 
   int? id;
-  int? quantity;
+  int? quantity=1;
   Product? product;
-  Order? order;
 
-
+//<editor-fold desc="Data Methods">
   ProductInPurchase({
     this.id,
     this.quantity,
     this.product,
-    this.order,
   });
 
   @override
@@ -23,49 +21,47 @@ class ProductInPurchase{
           runtimeType == other.runtimeType &&
           id == other.id &&
           quantity == other.quantity &&
-          product == other.product &&
-          order == other.order);
+          product == other.product);
 
   @override
-  int get hashCode =>
-      id.hashCode ^ quantity.hashCode ^ product.hashCode ^ order.hashCode;
+  int get hashCode => id.hashCode ^ quantity.hashCode ^ product.hashCode;
 
   @override
   String toString() {
-    return 'ProductInPurchase{ id: $id, quantity: $quantity, product: $product, order: $order,}';
+    return 'ProductInPurchase{' +
+        ' id: $id,' +
+        ' quantity: $quantity,' +
+        ' product: $product,' +
+        '}';
   }
 
   ProductInPurchase copyWith({
     int? id,
     int? quantity,
     Product? product,
-    Order? order,
   }) {
     return ProductInPurchase(
       id: id ?? this.id,
       quantity: quantity ?? this.quantity,
       product: product ?? this.product,
-      order: order ?? this.order,
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'quantity': quantity,
-      'product': product,
-      'order': order,
+      'quantity': this.quantity,
+      'product': product?.toJson2(),
     };
   }
 
-  factory ProductInPurchase.fromMap(Map<String, dynamic> map) {
+  factory ProductInPurchase.fromJson(Map<String, dynamic> map) {
     return ProductInPurchase(
       id: map['id'] as int,
       quantity: map['quantity'] as int,
-      product: map['product'] as Product,
-      order: map['order'] as Order,
+      product: Product.fromJson(map['product']),
     );
   }
 
-
+//</editor-fold>
 }

@@ -1,14 +1,20 @@
-import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_piattaforme_frontend/components/order_tile.dart';
 import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
 import 'package:provider/provider.dart';
 
-class OrderPage extends StatelessWidget{
+class OrderPage extends StatefulWidget {
 
-  OrderPage({super.key});
+  const OrderPage({super.key});
+
+  @override
+  State<StatefulWidget> createState()=>_OrderPageState();
+
+}
+
+class _OrderPageState extends State<OrderPage>{
+
 
 
   @override
@@ -19,7 +25,7 @@ class OrderPage extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.backspace_outlined),
+          icon: const Icon(Icons.backspace_outlined),
           onPressed: () => Navigator.pop(context)
         )
       ),

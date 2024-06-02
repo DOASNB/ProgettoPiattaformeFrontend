@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:progetto_piattaforme_frontend/components/favorite_button.dart';
+import 'package:progetto_piattaforme_frontend/components/mustBeLoggedInAlert.dart';
 import 'package:progetto_piattaforme_frontend/entities/Product.dart';
+import 'package:progetto_piattaforme_frontend/managers/UserManager.dart';
 import 'package:provider/provider.dart';
 
 import '../managers/ShopManager.dart';
 
-class ProductTile extends StatelessWidget{
+class ProductTile extends StatefulWidget {
 
-  final Product product;
+  Product product = Product();
+  bool favorite;
+  ShopManager shopManager;
 
-  const ProductTile({super.key, required this.product });
+
+  ProductTile(this.shopManager,this.product, this.favorite,{super.key});
+
+
+
+
+    @override
+    _ProductTileState createState() => _ProductTileState();
+
+
+
+
+}
+
+
+class _ProductTileState extends State<ProductTile>{
+
+
 
   @override
   Widget build(BuildContext context){
+
+
 
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary,borderRadius: BorderRadius.circular(12)),
@@ -40,18 +62,18 @@ class ProductTile extends StatelessWidget{
 
 
 
-          Text(product.name!,
+          Text(widget.product.name!,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 27
           ),),
-          Text(product.description!,
+          Text(widget.product.description!,
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary
           ),),
 
           const Spacer(),
-          Text("£${product.price!.toStringAsFixed(2)}",
+          Text("€${widget.product.price!.toStringAsFixed(2)}",
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 18
@@ -69,8 +91,35 @@ class ProductTile extends StatelessWidget{
 
                 width: 40,
                 height: 40,
-                child: FavoriteButton(favorite: false),
-              )
+                child:
+                widget.favorite? IconButton(
+                  onPressed: (){
+                    if(UserManager().loggedIn){
+                        setState(() {
+                          widget.shopManager.removeFavorite(widget.product);
+                          widget.favorite=false;
+                        });
+                    }else{
+                      showDialog(context: context, builder: (context)=>MustBeLoggedInAlert.alert(context));
+                    }
+
+                  },
+                  icon: const Icon(Icons.favorite),
+
+                ):IconButton(
+                  onPressed: (){
+                    if(UserManager().loggedIn){
+                      setState(() {
+                        widget.shopManager.addFavorite(widget.product);
+                        widget.favorite=true;
+                      });
+                    }else{
+                      showDialog(context: context, builder: (context)=>MustBeLoggedInAlert.alert(context));
+                    }
+
+                  },
+                  icon: const Icon(Icons.favorite_border),
+              ))
             ],
           )
 
@@ -89,11 +138,11 @@ class ProductTile extends StatelessWidget{
         content: const Text("Aggiungere al carrello?"),
         actions: [
           MaterialButton(onPressed: ()=> Navigator.pop(context),
-          child: const Text("canccella")),
+          child: const Text("cancella")),
 
           MaterialButton(onPressed: () {
             Navigator.pop(context);
-              context.read<ShopManager>().addToCart(product);
+              context.read<ShopManager>().addToCart(widget.product);
           },
           child: const Text("Si")),
 

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:progetto_piattaforme_frontend/support/constants.dart' as constants ;
 
 
 class Product {
@@ -10,28 +8,42 @@ class Product {
   String? imageName;
   double? price;
   int? quantity;
-  String? category;
-
-
-
+  int? version;
 
 //<editor-fold desc="Data Methods">
 
   Product({
     this.id,
-     this.barCode,
+    this.barCode,
     this.name,
-     this.description,
-     this.imageName,
-     this.price,
-     this.quantity,
-     this.category,
+    this.description,
+    this.imageName,
+    this.price,
+    this.quantity,
+    this.version,
   });
 
+//<ed@override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          (other is Product &&
+              runtimeType == other.runtimeType &&
+
+              barCode == other.barCode
+
+          );
 
 
-
-
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      barCode.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      imageName.hashCode ^
+      price.hashCode ^
+      quantity.hashCode ^
+      version.hashCode;
 
 
   @override
@@ -44,15 +56,35 @@ class Product {
         ' imageName: $imageName,' +
         ' price: $price,' +
         ' quantity: $quantity,' +
-        ' category: $category,' +
+        ' version: $version,' +
         '}';
   }
 
 
+  Product copyWith({
+    int? id,
+    String? barCode,
+    String? name,
+    String? description,
+    String? imageName,
+    double? price,
+    int? quantity,
+    int? version,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      barCode: barCode ?? this.barCode,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      imageName: imageName ?? this.imageName,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      version: version ?? this.version,
+    );
+  }
 
 
-
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': this.id,
       'barCode': this.barCode,
@@ -61,25 +93,28 @@ class Product {
       'imageName': this.imageName,
       'price': this.price,
       'quantity': this.quantity,
-      'category': this.category,
+      'version': this.version,
     };
   }
 
-  factory Product.fromMap(Map<String, dynamic> map) {
+  Map<String, dynamic> toJson2() {
+    return {
+      'id': this.id,
+      'barCode': this.barCode,
+    };
+  }
 
-
-    Product prodotto =  Product(
+  factory Product.fromJson(Map<String, dynamic> map) {
+    return Product(
       id: map['id'],
-      quantity: map['quantity'],
       barCode: map['barCode'],
       name: map['name'],
-      description: map['description'],
+      description: map['description'] ,
       imageName: map['imageName'],
-      price: map['price'],
-      category: map['category']
+      price: map['price'] ,
+      quantity: map['quantity'] ,
+      version: map['version'],
     );
-
-    return prodotto;
   }
 
 

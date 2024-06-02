@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:progetto_piattaforme_frontend/entities/Product.dart';
+import 'package:intl/intl.dart';
 
 import '../entities/Order.dart';
 
@@ -25,7 +25,8 @@ class OrderTile extends StatelessWidget{
     child:Column(crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          Text("Ordine numero:"+ order.id.toString(),textAlign: TextAlign.start,),
+          Text("Ordine numero:${order.id}",textAlign: TextAlign.start,
+          style: TextStyle(fontSize: 40),),
 
           Container(
               decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondary,
@@ -36,16 +37,23 @@ class OrderTile extends StatelessWidget{
               child:SizedBox(
                 width: double.infinity,
                 height: 200,
-                child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 200),
-                itemCount: order.productInPurchase?.length,
+                child: ListView.builder(
+                itemCount: order.productsInPurchase?.length,
+
+
                 itemBuilder: (context,index)
                 {
-                  final  product = order.productInPurchase![index];
+                  final  product = order.productsInPurchase![index];
 
-                  return Text("${product.product?.name}: ${product.quantity}");
+                  return Text("${product.product?.name} x${product.quantity}",
+                  style: const TextStyle(fontSize: 30),);
                 }),
               )
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(DateFormat('yyyy-MM-dd HH:mm:ss').format(order.purchaseTime!).toString(),style: TextStyle(fontSize: 25),),
+            ],
           )
         ],
       )

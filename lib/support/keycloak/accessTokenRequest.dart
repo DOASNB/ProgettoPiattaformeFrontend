@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:progetto_piattaforme_frontend/support/constants.dart' as constants;
 
 class AccessTokenRequest {
   static Future<String?> getAccessToken() async {

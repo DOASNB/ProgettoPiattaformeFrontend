@@ -1,8 +1,13 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:progetto_piattaforme_frontend/components/mustBeLoggedInAlert.dart';
 import 'package:progetto_piattaforme_frontend/managers/ShopManager.dart';
+import 'package:progetto_piattaforme_frontend/managers/UserManager.dart';
+import 'package:progetto_piattaforme_frontend/pages/loginPage.dart';
 import 'package:progetto_piattaforme_frontend/pages/orderPage.dart';
+import 'package:progetto_piattaforme_frontend/support/Globals.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/cartPage.dart';
@@ -22,14 +27,38 @@ class MyAppbar extends AppBar {
 
 class _MyAppbarState extends State<MyAppbar>{
 
-  bool loggedIn = false;
+
+
+  void showAlertLogout(BuildContext context,ShopManager shop){
+    showDialog(context: context, builder: (context)=>
+        AlertDialog(
+            content: const Text("Logout?"),
+            actions: [
+              MaterialButton(onPressed: () {
+
+                UserManager().reset();
+                shop.updateLogin();
+                Navigator.pop(context);
+              },
+                  child: const Text("SI")),
+              MaterialButton(onPressed: () {
+
+                Navigator.pop(context);
+
+              },
+                  child: const Text("Cancella"))
+
+            ]));
+
+  }
 
 
   @override
   Widget build(BuildContext context) {
+        ShopManager shop = context.watch<ShopManager>();
+        bool loggedIn = shop.loggedIn;
 
 
-  
         return AppBar(
           title: const Text('Progetto piattaforme',
               style: TextStyle(color: Colors.black,
@@ -47,12 +76,54 @@ class _MyAppbarState extends State<MyAppbar>{
 
           }),
           actions: <Widget>[
-            IconButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage()));},
+
+            IconButton(onPressed: (){UserManager().login("user3@email", "pass");
+              shop.updateLogin();}, icon: Icon(Icons.abc)),
+
+            IconButton(onPressed: () {
+
+              loggedIn?
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderPage())):
+              showDialog(context: context, builder: (context)=>MustBeLoggedInAlert.alert(context));
+
+              },
                 icon: SvgPicture.asset("assets/icons/login.svg"),
                 constraints: const BoxConstraints(maxWidth: 60)),
 
+            loggedIn?SizedBox(
+                height: 40,
+                width: 300,
+                child:Row(
+                  children:
+                  [
+                    const Icon(Icons.accessibility,size: 40),
+
+                    TextButton(
+                        onPressed: (){
+                          setState(() {
+                            showAlertLogout(context,shop);
+                          });} ,
+                        child: Text("logged In as: ${userManager.user.email!}")
+                    )
+                  ]
+                )
+            ) :
+            IconButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));},
+                icon: SvgPicture.asset("assets/icons/login.svg"),
+                constraints: const BoxConstraints(maxWidth: 60))
+
+
           ],
         );
+
+
+
+
+
+
+
+
+
 
   }
 
