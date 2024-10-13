@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:progetto_piattaforme_frontend/entities/Product.dart';
 import 'package:progetto_piattaforme_frontend/entities/ProductInPurchase.dart';
+import 'package:progetto_piattaforme_frontend/entities/User.dart';
 import 'package:progetto_piattaforme_frontend/managers/UserManager.dart';
 
 
@@ -38,6 +39,9 @@ class ShopManager extends ChangeNotifier {
   void addToCart(Product item){
 
     ProductInPurchase pip = ProductInPurchase(product: item,quantity: 1);
+
+
+
 
     if(_cart.contains(pip)){
       pip = _cart.firstWhere((e) => e.product==pip.product);
@@ -77,7 +81,7 @@ class ShopManager extends ChangeNotifier {
   Future<List<Product>> updateFavorites() async{
     if(loggedIn){
     Map<String,String> value={
-      "email":UserManager().user.email!
+      "userId":UserManager().user.id.toString()
     };
 
     Response response = await restManager.makeGetRequest(constants.ADDRESS_STORE_SERVER, "products/favoritesList", value);
@@ -90,7 +94,7 @@ class ShopManager extends ChangeNotifier {
       }).toList();
 
       _favorites = products;
-      print(_favorites);
+
 
     }
 
@@ -156,12 +160,12 @@ class ShopManager extends ChangeNotifier {
 
     if(loggedIn){
 
-      String email = UserManager().user.email!;
-      String productCode = product.barCode!;
+      int? userId = UserManager().user.id;
+      int? productId = product.id;
 
       Map<String,String> values ={
-        "username":email,
-        "productCode":productCode};
+        "userId":userId.toString(),
+        "productId":productId.toString()};
 
       Response response = await restManager.makePostRequest("localhost:8081", "/products/unFavorite", values);
       print(response.body);
@@ -173,12 +177,12 @@ class ShopManager extends ChangeNotifier {
 
     if(loggedIn){
 
-      String email = UserManager().user.email!;
-      String productCode = product.barCode!;
+      int? userId = UserManager().user.id;
+      int? productId = product.id;
 
       Map<String,String> values ={
-        "username":email,
-        "productCode":productCode};
+        "userId":userId.toString(),
+        "productId":productId.toString()};
 
       Uri uri = Uri.http("localhost:8081","/products/favorite",values);
 
@@ -219,6 +223,7 @@ class ShopManager extends ChangeNotifier {
       return true;
 
     }
+
     return false;
 
 
@@ -239,7 +244,34 @@ class ShopManager extends ChangeNotifier {
 
   }
 
+  Future<List<Product>> productSearch(String query) async{
+    Map<String,String> values={
+      "name":query
+    };
 
+    List<Product> productsFound =[];
+
+    Response response = await restManager.makeGetRequest("localhost:8081", "products/search/by_name", values);
+    if(response.statusCode==200){
+      List<dynamic> productsjson = jsonDecode(response.body);
+
+
+      productsFound = productsjson.map((jsonItem) {
+        return Product.fromJson(jsonItem as Map<String, dynamic>);
+      }).toList();
+      notifyListeners();
+      return productsFound;
+    }
+    return [];
+
+
+
+  }
+
+  Future<void> updateShopSearch(String query) async {
+    _products = await productSearch(query);
+
+  }
 
 
 }

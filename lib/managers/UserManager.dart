@@ -13,6 +13,7 @@ import '../support/constants.dart';
 class UserManager {
   User? _user;
 
+
   String? _token;
   String? _refreshToken;
   bool _loggedIn = false;

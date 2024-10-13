@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:progetto_piattaforme_frontend/components/mustBeLoggedInAlert.dart';
@@ -26,7 +27,11 @@ class MyAppbar extends AppBar {
 
 
 class _MyAppbarState extends State<MyAppbar>{
+  final TextEditingController _controller = TextEditingController();
 
+  void _onSearchButtonPressed(ShopManager shopManager) {
+    shopManager.updateShopSearch(_controller.text);
+  }
 
 
   void showAlertLogout(BuildContext context,ShopManager shop){
@@ -75,10 +80,12 @@ class _MyAppbarState extends State<MyAppbar>{
               );
 
           }),
+
           actions: <Widget>[
 
-            IconButton(onPressed: (){UserManager().login("user3@email", "pass");
-              shop.updateLogin();}, icon: Icon(Icons.abc)),
+
+
+
 
             IconButton(onPressed: () {
 
@@ -87,12 +94,12 @@ class _MyAppbarState extends State<MyAppbar>{
               showDialog(context: context, builder: (context)=>MustBeLoggedInAlert.alert(context));
 
               },
-                icon: SvgPicture.asset("assets/icons/login.svg"),
+                icon: Icon(Icons.add_card_outlined),
                 constraints: const BoxConstraints(maxWidth: 60)),
 
             loggedIn?SizedBox(
                 height: 40,
-                width: 300,
+
                 child:Row(
                   children:
                   [
@@ -109,7 +116,7 @@ class _MyAppbarState extends State<MyAppbar>{
                 )
             ) :
             IconButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));},
-                icon: SvgPicture.asset("assets/icons/login.svg"),
+                icon: Icon(Icons.login_outlined),
                 constraints: const BoxConstraints(maxWidth: 60))
 
 

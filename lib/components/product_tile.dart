@@ -49,7 +49,7 @@ class _ProductTileState extends State<ProductTile>{
 
         crossAxisAlignment: CrossAxisAlignment.start,
         children:[
-        AspectRatio(aspectRatio: 2,
+        AspectRatio(aspectRatio: 1.4,
 
         child: Container(
 
@@ -57,7 +57,11 @@ class _ProductTileState extends State<ProductTile>{
             borderRadius: BorderRadius.circular(12)),
             width: double.infinity,
             padding: const EdgeInsets.all(5),
-            child: const Icon(Icons.face))),
+            child:widget.product.imageName != null?Image.network(
+              "assets/images/${widget.product.imageName}.jpg", // Use your image URL here
+              fit: BoxFit.cover  ): const Icon(Icons.error_outline),
+        ),
+        ),
 
 
 
@@ -81,7 +85,12 @@ class _ProductTileState extends State<ProductTile>{
 
           Row(
             children: [
-              IconButton(onPressed: () => addToCart(context), icon: SvgPicture.asset("assets/icons/add_to_cart.svg") ),
+              IconButton(
+
+
+                  onPressed: () => addToCart(context),
+                  icon: SvgPicture.asset("assets/icons/add_to_cart.svg")
+              ),
               
               const Spacer(),
 
@@ -133,6 +142,12 @@ class _ProductTileState extends State<ProductTile>{
   }
 
   void addToCart(BuildContext context){
+
+    if(widget.product.quantity!<=0){
+      quantityUnavailable(context);
+      return;
+    }
+
     showDialog(context: context, builder: (context)=>
         AlertDialog(
         content: const Text("Aggiungere al carrello?"),
@@ -147,6 +162,16 @@ class _ProductTileState extends State<ProductTile>{
           child: const Text("Si")),
 
         ],));
+  }
+  void quantityUnavailable(BuildContext context){
+    showDialog(context: context, builder: (context)=>
+        AlertDialog(
+          content: const Text("prodotto esaurito"),
+          actions: [
+            MaterialButton(onPressed: ()=> Navigator.pop(context),
+                child: const Text("torna indietro")),
+
+          ],));
   }
 
 }

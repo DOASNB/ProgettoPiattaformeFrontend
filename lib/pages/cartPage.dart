@@ -122,7 +122,7 @@ class _CartPageState extends State<CartPage> {
   void showAlertError(BuildContext context) {
     showDialog(context: context, builder: (context) =>
         AlertDialog(
-          content: const Text("Errore"),
+          content: const Text("Errore prodotto esaurito"),
           actions: [
             MaterialButton(onPressed: () => Navigator.pop(context),
                 child: const Text("OK")),

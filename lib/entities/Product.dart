@@ -29,7 +29,7 @@ class Product {
           (other is Product &&
               runtimeType == other.runtimeType &&
 
-              barCode == other.barCode
+              id == other.id
 
           );
 

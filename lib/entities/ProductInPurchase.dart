@@ -19,8 +19,7 @@ class ProductInPurchase{
       identical(this, other) ||
       (other is ProductInPurchase &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
-          quantity == other.quantity &&
+
           product == other.product);
 
   @override
