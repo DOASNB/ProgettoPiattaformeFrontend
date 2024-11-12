@@ -71,7 +71,7 @@ class _MyAppbarState extends State<MyAppbar>{
                   fontWeight: FontWeight.bold)
           ),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.deepOrange,
           leading: IconButton(
             icon: SvgPicture.asset("assets/icons/cart.svg"), onPressed: () {
               Navigator.push(

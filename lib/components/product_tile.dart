@@ -58,7 +58,7 @@ class _ProductTileState extends State<ProductTile>{
             width: double.infinity,
             padding: const EdgeInsets.all(5),
             child:widget.product.imageName != null?Image.network(
-              "assets/images/${widget.product.imageName}.jpg", // Use your image URL here
+              "assets/images/${widget.product.imageName}.jpg",
               fit: BoxFit.cover  ): const Icon(Icons.error_outline),
         ),
         ),
@@ -89,7 +89,7 @@ class _ProductTileState extends State<ProductTile>{
 
 
                   onPressed: () => addToCart(context),
-                  icon: SvgPicture.asset("assets/icons/add_to_cart.svg")
+                  icon: widget.product.quantity!<=0? Icon(Icons.highlight_remove, color: Colors.black):Icon(Icons.add_shopping_cart,color: Colors.black,)
               ),
               
               const Spacer(),
@@ -113,7 +113,7 @@ class _ProductTileState extends State<ProductTile>{
                     }
 
                   },
-                  icon: const Icon(Icons.favorite),
+                  icon: const Icon(Icons.favorite,color: Colors.red),
 
                 ):IconButton(
                   onPressed: (){
@@ -127,7 +127,7 @@ class _ProductTileState extends State<ProductTile>{
                     }
 
                   },
-                  icon: const Icon(Icons.favorite_border),
+                  icon: const Icon(Icons.favorite_border,color: Colors.red),
               ))
             ],
           )
