@@ -18,10 +18,8 @@ class AccessTokenRequest {
     };
 
 
-
+  try {
     final response = await http.post(uri, body: requestBody);
-
-
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
 
@@ -30,5 +28,11 @@ class AccessTokenRequest {
       print("Error response code: ${response.statusCode}");
       return null;
     }
+  }
+    on Exception catch (e){
+    print(e);
+    }
+
+
   }
 }

@@ -209,21 +209,22 @@ class ShopManager extends ChangeNotifier {
 
   Future<bool> buyProducts() async {
 
-    Order order = Order();
-    order.buyer = UserManager().user;
-    order.productsInPurchase = _cart;
+    if(_cart.isNotEmpty) {
+      Order order = Order();
+      order.buyer = UserManager().user;
+      order.productsInPurchase = _cart;
 
 
-    Response response = await restManager.makePostRequest("localhost:8081", "orders", order.toJson());
-    print(response.body);
-    if(response.statusCode==200){
-      _cart =[];
-      updateOrders();
-      notifyListeners();
-      return true;
-
+      Response response = await restManager.makePostRequest(
+          "localhost:8081", "orders", order.toJson());
+      print(response.body);
+      if (response.statusCode == 200) {
+        _cart = [];
+        updateOrders();
+        notifyListeners();
+        return true;
+      }
     }
-
     return false;
 
 
